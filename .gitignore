@@ -2,3 +2,6 @@
 *output.dat
 *.pyc
 *.egg-info
+
+doc/build/*
+doc/source/api/*
