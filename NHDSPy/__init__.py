@@ -6,6 +6,8 @@ from . import helpers
 
 class Species:
     """
+    A single bi-Maxwellian species.
+
     Parameters
     ----------
     q : float
@@ -40,13 +42,16 @@ class InputParams:
 
     Parameters
     ----------
-    species : list of `Species`
+    species : list of :class:`Species`
         List of the particle species for which to calculate the dispersion.
     propagation_angle : float
         Propagation angle to calculate dispersion relation for. Defined
         with respect to the magnetic field.
     va : float
         Ratio of the Alfvén speed to the speed of light.
+
+    Other parameters
+    ----------------
     numiter : int, optional
         Maximum number of iterations in the Newton method
     det_D_threshold : float, optional
@@ -78,6 +83,9 @@ class InputParams:
 
     @property
     def nspecies(self):
+        '''
+        Number of species.
+        '''
         return len(self.species)
 
 
@@ -96,11 +104,17 @@ class Result:
         return self.output[:, 0]
 
     @property
-    def x_real(self):
+    def omega_real(self):
+        '''
+        Real part of frequency normalised to the proton gyro-frequency.
+        '''
         return self.output[:, 1]
 
     @property
-    def x_imag(self):
+    def omega_imag(self):
+        '''
+        Imaginary part of frequency normalised to the proton gyro-frequency.
+        '''
         return self.output[:, 2]
 
 
@@ -223,6 +237,8 @@ def format_input_file(input):
 
 def run(input):
     '''
+    Run the dispersion solver for a given input.
+
     Parameters
     ----------
     input : InputParams
