@@ -243,8 +243,13 @@ def run(input):
     ----------
     input : InputParams
     '''
-    NHDS_binary = 'NHDS/bin/NHDS'
-    out = subprocess.check_output([NHDS_binary], universal_newlines=True)
-    out = Result(input, out)
-    print(out.output.shape)
-    return out
+    nhds_folder = path.Path('NHDS')
+    # Create input file
+    with open(nhds_folder / 'src' / 'parameters.f90', mode='w') as f:
+        f.write(format_input_file(input))
+    # Recompile with new input
+    subprocess.run(['make', 'clean'], cwd=nhds_folder)
+    subprocess.run(['make'], cwd=nhds_folder)
+    binary = nhds_folder / 'bin' / 'NHDS'
+    out = subprocess.check_output([str(binary)], universal_newlines=True)
+    return Result(input, out)
