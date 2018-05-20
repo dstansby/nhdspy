@@ -1,6 +1,9 @@
+import pathlib as path
 import subprocess
 import tempfile
+
 import numpy as np
+
 from . import helpers
 
 
@@ -127,100 +130,100 @@ def format_input_file(input):
     input : InputParams
     '''
     input_file_sting = r'''
-    subroutine set_parameters()
-    use input_params
-    implicit none
+subroutine set_parameters()
+use input_params
+implicit none
 
-    ! Number of species
-    ! (up to 10 species are possible)
-    numspec={numspec}
+! Number of species
+! (up to 10 species are possible)
+numspec={numspec}
 
-    ! Maximum number of iterations in the Newton method
-    numiter={numiter}
+! Maximum number of iterations in the Newton method
+numiter={numiter}
 
-    ! Threshold for the determinant of the dispersion tensor:
-    ! If det D <= det_D_threshold, the Newton iteration will be stopped
-    det_D_threshold={detD}
+! Threshold for the determinant of the dispersion tensor:
+! If det D <= det_D_threshold, the Newton iteration will be stopped
+det_D_threshold={detD}
 
-    ! Maximum of sum in Bessel functions (both regular and modified)
-    ! can be very low (e.g., 3) for quasi-parallel propagation
-    nmax={nmax}
+! Maximum of sum in Bessel functions (both regular and modified)
+! can be very low (e.g., 3) for quasi-parallel propagation
+nmax={nmax}
 
-    ! If I_n is less than this value, higher n are neglected:
-    Bessel_zero={bessel_zero}
+! If I_n is less than this value, higher n are neglected:
+Bessel_zero={bessel_zero}
 
-    ! Temperature anisotropy (Tperp/Tparallel)
-    alpha=(/ 1.d0,1.d0,1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+! Temperature anisotropy (Tperp/Tparallel)
+alpha=(/ 1.d0,1.d0,1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
 
-    ! Parallel beta of the species
-    beta=(/ 1.d0,1.d0,1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+! Parallel beta of the species
+beta=(/ 1.d0,1.d0,1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
 
-    ! Charge of the species in units of the first ion charge
-    charge=(/ 1.d0,-1.d0,2.d0,-1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+! Charge of the species in units of the first ion charge
+charge=(/ 1.d0,-1.d0,2.d0,-1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
 
-    ! Mass of the species in units of ion mass
-    mass=(/ 1.d0,1.d0/1836.d0,4.d0,1.d0/1836.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+! Mass of the species in units of ion mass
+mass=(/ 1.d0,1.d0/1836.d0,4.d0,1.d0/1836.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
 
-    ! Density of the species in units of proton density
-    density=(/ 1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+! Density of the species in units of proton density
+density=(/ 1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
 
-    ! Drift speed of the species in units of proton Alfven speed
-    vdrift=(/ 0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+! Drift speed of the species in units of proton Alfven speed
+vdrift=(/ 0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
 
-    ! Angle of propagation (in degrees)
-    theta={propagation_angle}
+! Angle of propagation (in degrees)
+theta={propagation_angle}
 
-    ! Alfven speed divided by speed of light
-    vAc={va}
+! Alfven speed divided by speed of light
+vAc={va}
 
-    ! Amplitude mode: If 1, then ampl = delta B_x / B0. If 2, then ampl = delta B_y / B0.
-    ! If 3, then ampl = delta B_z / B0
-    ampl_mode=3
+! Amplitude mode: If 1, then ampl = delta B_x / B0. If 2, then ampl = delta B_y / B0.
+! If 3, then ampl = delta B_z / B0
+ampl_mode=3
 
-    ! Amplitude for the calculation of polarization properties:
-    ampl=1.d0
+! Amplitude for the calculation of polarization properties:
+ampl=1.d0
 
-    ! Print warnings to std. output and stop program in case of problems
-    output_warning=.FALSE.
+! Print warnings to std. output and stop program in case of problems
+output_warning=.FALSE.
 
-    !! The following parameters are used to determine delta f in write_delta_f:
-    ! Maximum of sum in Bessel function:
-    ! can be very low (e.g., 3) for quasi-parallel propagation
-    mmax=1000
+!! The following parameters are used to determine delta f in write_delta_f:
+! Maximum of sum in Bessel function:
+! can be very low (e.g., 3) for quasi-parallel propagation
+mmax=1000
 
-    ! If I_n is less than this value, higher m are neglected:
-    Bessel_zero_deltaf=1.d-50
+! If I_n is less than this value, higher m are neglected:
+Bessel_zero_deltaf=1.d-50
 
-    ! Steps in vx, vy, and vz (standard: 100):
-    vxsteps={vxsteps}
-    vysteps={vysteps}
-    vzsteps={vzsteps}
+! Steps in vx, vy, and vz (standard: 100):
+vxsteps={vxsteps}
+vysteps={vysteps}
+vzsteps={vzsteps}
 
-    ! Range in vpar and vperp:
-    vxrange=(/ -1.d0,1.d0 /)
-    vyrange=(/ -1.d0,1.d0 /)
-    vzrange=(/ -1.d0,1.d0 /)
+! Range in vpar and vperp:
+vxrange=(/ -1.d0,1.d0 /)
+vyrange=(/ -1.d0,1.d0 /)
+vzrange=(/ -1.d0,1.d0 /)
 
-    ! Number of time steps for one full period (standard: 25):
-    timesteps=40
+! Number of time steps for one full period (standard: 25):
+timesteps=40
 
-    ! If periods is .TRUE., then num_periods is number of periods (2 PI / omega_r).
-    ! If periods is .FALSE., then num_periods is number of gyro-periods (2 PI / Omega_p).
-    periods=.TRUE.
+! If periods is .TRUE., then num_periods is number of periods (2 PI / omega_r).
+! If periods is .FALSE., then num_periods is number of gyro-periods (2 PI / Omega_p).
+periods=.TRUE.
 
-    ! Number of periods (standard: 8):
-    num_periods=1
+! Number of periods (standard: 8):
+num_periods=1
 
-    ! Include wave damping in delta f calculation or not (exp(gamma*t)-term):
-    damping=.FALSE.
+! Include wave damping in delta f calculation or not (exp(gamma*t)-term):
+damping=.FALSE.
 
-    ! If const_r is .TRUE., then delta f is evaluated at point r = 0 -> cos(-omega * t)
-    ! If const_r is .FALSE., then the wave period is a function of space at -> cos(k * r)
-    !		with k * r from 0 ... 2 pi at a fixed time. We "fly" along the k-direction over one wave train.
-    ! 		If set on .FALSE., periods does not make a difference
-    const_r=.TRUE.
+! If const_r is .TRUE., then delta f is evaluated at point r = 0 -> cos(-omega * t)
+! If const_r is .FALSE., then the wave period is a function of space at -> cos(k * r)
+!		with k * r from 0 ... 2 pi at a fixed time. We "fly" along the k-direction over one wave train.
+! 		If set on .FALSE., periods does not make a difference
+const_r=.TRUE.
 
-    end subroutine
+end subroutine
     '''.format(numspec=input.nspecies,
                numiter=input.numiter,
                detD=helpers._float_to_fortran_str(input.det_D_threshold),
