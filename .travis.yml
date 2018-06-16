@@ -18,7 +18,7 @@ before_install:
 
 script:
 # Check that unit tests work
-- pytest NHDS/ --cov=NHDS/ -v
+- pytest NHDSPy/ --cov=NHDSPy/ -v
 
 after_success:
 - pip install codecov
