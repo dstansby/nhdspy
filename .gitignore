@@ -9,3 +9,5 @@ doc/source/api/*
 NHDS/obj
 NHDS/bin
 NHDS/input_params.mod
+
+.pytest_cache
