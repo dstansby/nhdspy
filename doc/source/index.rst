@@ -5,6 +5,7 @@ Welcome to NHDSPy's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   example
    ref
 
 
