@@ -93,6 +93,9 @@ class InputParams:
 
 
 class Result:
+    '''
+    Result of running the dispersion solver.
+    '''
     def __init__(self, input, run_output):
         self.input = input
         self.output = self._process_output(run_output)
@@ -104,6 +107,9 @@ class Result:
 
     @property
     def kz(self):
+        '''
+        Wave vector.
+        '''
         return self.output[:, 0]
 
     @property
@@ -129,6 +135,21 @@ def format_input_file(input):
     ----------
     input : InputParams
     '''
+    def create_species_list(attr):
+        '''
+        Function to populate species properties.
+        '''
+        n = 0
+        ret = '(/ '
+        for species in input.species:
+            x = getattr(species, attr)
+            ret += '{},'.format(helpers._float_to_fortran_str(x))
+            n += 1
+        for i in range(n, 10):
+            ret += '0.d0,'
+        ret = ret[:-1] + ' /)'
+        return ret
+
     input_file_sting = r'''
 subroutine set_parameters()
 use input_params
@@ -153,22 +174,22 @@ nmax={nmax}
 Bessel_zero={bessel_zero}
 
 ! Temperature anisotropy (Tperp/Tparallel)
-alpha=(/ 1.d0,1.d0,1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+alpha={alpha}
 
 ! Parallel beta of the species
-beta=(/ 1.d0,1.d0,1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+beta={beta}
 
 ! Charge of the species in units of the first ion charge
-charge=(/ 1.d0,-1.d0,2.d0,-1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+charge={charge}
 
 ! Mass of the species in units of ion mass
-mass=(/ 1.d0,1.d0/1836.d0,4.d0,1.d0/1836.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+mass={mass}
 
 ! Density of the species in units of proton density
-density=(/ 1.d0,1.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+density={density}
 
 ! Drift speed of the species in units of proton Alfven speed
-vdrift=(/ 0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0,0.d0 /)
+vdrift={vdrift}
 
 ! Angle of propagation (in degrees)
 theta={propagation_angle}
@@ -234,6 +255,12 @@ end subroutine
                vxsteps=input.vxsteps,
                vysteps=input.vysteps,
                vzsteps=input.vzsteps,
+               alpha=create_species_list('t_ani'),
+               beta=create_species_list('beta_par'),
+               charge=create_species_list('q'),
+               mass=create_species_list('m'),
+               density=create_species_list('n'),
+               vdrift=create_species_list('v_d')
                )
     return input_file_sting
 
@@ -247,6 +274,8 @@ def run(input):
     input : InputParams
     '''
     nhds_folder = path.Path('NHDS')
+    (nhds_folder / 'obj').mkdir(exist_ok=True)
+    (nhds_folder / 'bin').mkdir(exist_ok=True)
     # Create input file
     with open(nhds_folder / 'src' / 'parameters.f90', mode='w') as f:
         f.write(format_input_file(input))
