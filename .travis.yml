@@ -14,7 +14,7 @@ before_install:
 - conda create --yes -n testenv python=$TRAVIS_PYTHON_VERSION
 - source activate testenv
 
-- pip instal -r requirements/test.txt
+- pip install -r requirements/test.txt
 
 script:
 # Check that unit tests work
