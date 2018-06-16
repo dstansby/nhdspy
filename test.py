@@ -1,11 +1,13 @@
 import NHDSPy
 import matplotlib.pyplot as plt
 
-input = NHDSPy.InputParams([], 0, 1e-4)
+electrons = NHDSPy.Species(-1, 1 / 1836, 1, 0, 1, 1)
+protons = NHDSPy.Species(1, 1, 1, 0, 1, 1)
+input = NHDSPy.InputParams([electrons, protons], 0.001, 1e-4)
 print(NHDSPy.format_input_file(input))
 output = NHDSPy.run(input)
 
 fig, ax = plt.subplots()
-ax.plot(output.kz, output.x_real)
-ax.plot(output.kz, output.x_imag)
+ax.plot(output.kz, output.omega_real)
+ax.plot(output.kz, output.omega_imag)
 plt.show()
