@@ -47,6 +47,9 @@ class InputParams:
     ----------
     species : list of :class:`Species`
         List of the particle species for which to calculate the dispersion.
+    omega_guess : complex
+        Initial guess for the frequency, normalised to the gyro frequency of
+        the first species.
     propagation_angle : float
         Propagation angle to calculate dispersion relation for. Defined
         with respect to the magnetic field.
@@ -68,12 +71,13 @@ class InputParams:
     vxsteps, vysteps, vzsteps : int, optional
         Steps in the x,y,z directions.
     """
-    def __init__(self, species, propagation_angle, va,
+    def __init__(self, species, omega_guess, propagation_angle, va,
                  numiter=1000, det_D_threshold=1e-16,
                  n_bessel=1000, bessel_zero=1e-50,
                  vxsteps=100, vysteps=100, vzsteps=100
                  ):
         self.species = species
+        self.omega_guess = omega_guess
         self.propagation_angle = propagation_angle
         self.va = va
         self.numiter = numiter
@@ -191,6 +195,9 @@ density={density}
 ! Drift speed of the species in units of proton Alfven speed
 vdrift={vdrift}
 
+! Initial frequency guess
+omega_guess={omega_guess_real}{omega_guess_imag}*uniti
+
 ! Angle of propagation (in degrees)
 theta={propagation_angle}
 
@@ -250,6 +257,8 @@ end subroutine
                detD=helpers._float_to_fortran_str(input.det_D_threshold),
                nmax=input.n_bessel,
                bessel_zero=helpers._float_to_fortran_str(input.bessel_zero),
+               omega_guess_real=helpers._float_to_fortran_str(input.omega_guess.real),
+               omega_guess_imag=helpers._float_to_fortran_str(input.omega_guess.imag),
                propagation_angle=helpers._float_to_fortran_str(input.propagation_angle),
                va=helpers._float_to_fortran_str(input.va),
                vxsteps=input.vxsteps,

@@ -24,6 +24,7 @@ module input_params
   double precision :: vtherm(10),alpha(10),Omega(10),ell(10),vdrift(10),mass(10),charge(10),beta(10),density(10)
   double precision :: vAc,det_D_threshold,Bessel_zero,ampl,theta
   double precision :: Bessel_zero_deltaf,vxrange(2),vyrange(2),vzrange(2)
+  double complex :: omega_guess
   double complex, parameter ::  uniti=(0.d0,1.d0)
   double precision,parameter :: M_PI=3.141592654d0
   logical :: output_warning,damping,periods,const_r
@@ -49,7 +50,7 @@ enddo
 
 
 ! Initial guess for frequency in units of proton gyrofrequency:
-x=0.009d0-0.0001d0*uniti
+x=omega_guess
 
 open(unit=10,file='output.dat',status='replace',action='write')
 
