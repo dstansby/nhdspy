@@ -144,20 +144,18 @@ def format_input_file(input):
         Function to populate species properties.
         '''
         n = 0
-        ret = '(/ '
+        ret = ''
         for species in input.species:
             x = getattr(species, attr)
             ret += '{},'.format(helpers._float_to_fortran_str(x))
             n += 1
         for i in range(n, 10):
             ret += '0.d0,'
-        ret = ret[:-1] + ' /)'
+        ret = ret[:-1]
         return ret
 
     input_file_sting = r'''
-subroutine set_parameters()
-use input_params
-implicit none
+&parameters
 
 ! Number of species
 ! (up to 10 species are possible)
@@ -177,6 +175,15 @@ nmax={nmax}
 ! If I_n is less than this value, higher n are neglected:
 Bessel_zero={bessel_zero}
 
+! Initial frequency guess
+initial_guess=({omega_guess_real},{omega_guess_imag})
+
+! Range of values to scan over in kz:
+kzrange=0.01d0,0.21d0
+
+! Number of steps to scan over kzrange:
+kzsteps=200
+
 ! Temperature anisotropy (Tperp/Tparallel)
 alpha={alpha}
 
@@ -194,9 +201,6 @@ density={density}
 
 ! Drift speed of the species in units of proton Alfven speed
 vdrift={vdrift}
-
-! Initial frequency guess
-omega_guess={omega_guess_real}{omega_guess_imag}*uniti
 
 ! Angle of propagation (in degrees)
 theta={propagation_angle}
@@ -228,30 +232,29 @@ vysteps={vysteps}
 vzsteps={vzsteps}
 
 ! Range in vpar and vperp:
-vxrange=(/ -1.d0,1.d0 /)
-vyrange=(/ -1.d0,1.d0 /)
-vzrange=(/ -1.d0,1.d0 /)
+vxrange=-1.d0,1.d0
+vyrange=-1.d0,1.d0
+vzrange=-1.d0,1.d0
 
 ! Number of time steps for one full period (standard: 25):
 timesteps=40
 
 ! If periods is .TRUE., then num_periods is number of periods (2 PI / omega_r).
 ! If periods is .FALSE., then num_periods is number of gyro-periods (2 PI / Omega_p).
-periods=.TRUE.
+periods=T
 
 ! Number of periods (standard: 8):
 num_periods=1
 
 ! Include wave damping in delta f calculation or not (exp(gamma*t)-term):
-damping=.FALSE.
+damping=F
 
 ! If const_r is .TRUE., then delta f is evaluated at point r = 0 -> cos(-omega * t)
 ! If const_r is .FALSE., then the wave period is a function of space at -> cos(k * r)
 !		with k * r from 0 ... 2 pi at a fixed time. We "fly" along the k-direction over one wave train.
 ! 		If set on .FALSE., periods does not make a difference
-const_r=.TRUE.
-
-end subroutine
+const_r=T
+/
     '''.format(numspec=input.nspecies,
                numiter=input.numiter,
                detD=helpers._float_to_fortran_str(input.det_D_threshold),
@@ -286,11 +289,13 @@ def run(input):
     (nhds_folder / 'obj').mkdir(exist_ok=True)
     (nhds_folder / 'bin').mkdir(exist_ok=True)
     # Create input file
-    with open(nhds_folder / 'src' / 'parameters.f90', mode='w') as f:
+    with open(nhds_folder / 'parameters.in', mode='w') as f:
         f.write(format_input_file(input))
-    # Recompile with new input
-    subprocess.run(['make', 'clean'], cwd=nhds_folder)
-    subprocess.run(['make'], cwd=nhds_folder)
-    binary = nhds_folder / 'bin' / 'NHDS'
-    out = subprocess.check_output([str(binary)], universal_newlines=True)
+    # Check if NHDS is compiled
+    binary = nhds_folder / 'NHDS'
+    if not binary.exists():
+        subprocess.run(['make', 'clean'], cwd=nhds_folder)
+        subprocess.run(['make'], cwd=nhds_folder)
+        os.rename((nhds_folder / 'bin' / 'NHDS'), binary)
+    out = subprocess.check_output('./NHDS', universal_newlines=True, cwd=nhds_folder)
     return Result(input, out)

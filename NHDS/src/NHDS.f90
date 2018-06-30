@@ -30,11 +30,11 @@ module input_params
   implicit none
   save
   integer :: numspec,numiter,nmax,mmax,ampl_mode
-  integer :: vxsteps,vysteps,vzsteps,timesteps,num_periods
+  integer :: vxsteps,vysteps,vzsteps,timesteps,num_periods,kzsteps
   double precision :: vtherm(10),alpha(10),Omega(10),ell(10),vdrift(10),mass(10),charge(10),beta(10),density(10)
-  double precision :: vAc,det_D_threshold,Bessel_zero,ampl,theta
+  double precision :: vAc,det_D_threshold,Bessel_zero,ampl,theta,kzrange(2)
   double precision :: Bessel_zero_deltaf,vxrange(2),vyrange(2),vzrange(2)
-  double complex :: omega_guess
+  double complex :: initial_guess
   double complex, parameter ::  uniti=(0.d0,1.d0)
   double precision,parameter :: M_PI=3.141592654d0
   logical :: output_warning,damping,periods,const_r
@@ -58,15 +58,15 @@ do j=1,numspec
   vtherm(j)=sqrt(beta(j)/(density(j)*mass(j)))
 enddo
 
-
 ! Initial guess for frequency in units of proton gyrofrequency:
-x=omega_guess
+x=initial_guess
 
 open(unit=10,file='output.dat',status='replace',action='write')
 
 
-do i=10,210,1
-   kz=0.001d0*i
+do i=1,kzsteps
+
+   kz=kzrange(1)+(kzrange(2)-kzrange(1))*(1.d0*i-1.d0)/(1.d0*kzsteps-1.d0)
    kperp=kz*tan(theta*M_PI/180.d0)
 
   call newton_method(x,kz,kperp,quality)
