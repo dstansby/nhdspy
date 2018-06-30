@@ -8,6 +8,7 @@ doc/source/api/*
 
 NHDS/obj
 NHDS/bin
+NHDS/input_params.mod
 NHDS/parameters.in
 NHDS/NHDS
 
