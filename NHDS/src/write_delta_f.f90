@@ -65,7 +65,7 @@ if (ampl_mode.EQ.1) then
 	! Avec fulfills the equation  c * dE = Avec * vA * dB_x
 	Avec(1)=uniti*x/(kz*pol)
 	Avec(2)=-x/kz
-	Avec(3)=polz*uniti*x/(kz*pol)	
+	Avec(3)=polz*uniti*x/(kz*pol)
 else if (ampl_mode.EQ.2) then
 	! Avec fulfills the equation  c * dE = Avec * vA * dB_y
 	Avec(1)=x/(kz-polz*kperp)
@@ -99,8 +99,8 @@ else
 	time=2.d0*M_PI*(1.d0*timerun)/(real(1.d0)*1.d0*timesteps)
 endif
 
-	
-	
+
+
 filename="output_deltaf000.h5"
 if (timerun.LT.10) then
 	 write ( timestring, '(i1)' ) timerun
@@ -185,7 +185,7 @@ do m=-mmaxrun,mmaxrun
 
 	a=(1.d0*m)*Omega(j)-x+kz*vpar
 
-	
+
 	UStix=dfdvperp+kz*(vperp*dfdvpar-vpar*dfdvperp)/x
 	VStix=kperp*(vperp*dfdvpar+vpar*dfdvperp)/x
 
@@ -205,7 +205,7 @@ if (const_r) then
 	else
 		deltaf=deltaf*exp(-uniti*time*real(x))
 	endif
-else 
+else
 	deltaf=deltaf*exp(uniti*2.d0*M_PI*(1.d0*timerun)/(1.d0*timesteps))
 endif
 
@@ -222,7 +222,7 @@ mindfim=min((mindfim),aimag(deltaf))
 	VZarray(i+1,k+1,l+1)=real(vz)
 	farray(i+1,k+1,l+1)=real(fnull+deltaf)
 
-	
+
 enddo ! end vz loop
 enddo ! end vy loop
 enddo ! end vx loop
@@ -267,7 +267,7 @@ character(LEN=14) :: form
 character(LEN=1) :: vxstring,vystring,vzstring
 
 write (*,*) "# Generating XDMF file visualize_output_deltaf.xmf"
-open(unit=100,file='visualize_output_deltaf.xmf',status='replace',action='write') 
+open(unit=100,file='visualize_output_deltaf.xmf',status='replace',action='write')
 
 
 
@@ -275,7 +275,7 @@ open(unit=100,file='visualize_output_deltaf.xmf',status='replace',action='write'
   write ( vxstring, '(i1)' ) int(log10(1.*vxsteps))+2
   write ( vystring, '(i1)' ) int(log10(1.*vysteps))+2
   write ( vzstring, '(i1)' ) int(log10(1.*vzsteps))+1
-  
+
   form(1:4)="(A,I"
   form(5:6)=vzstring
   form(6:7)=",I"
@@ -283,7 +283,7 @@ open(unit=100,file='visualize_output_deltaf.xmf',status='replace',action='write'
   form(9:10)=",I"
   form(11:12)=vxstring
   form(12:14)=",A)"
-  
+
 
 write (100,'(A)') '<?xml version="1.0" ?>'
 write (100,'(A)') '<!DOCTYPE Xdmf SYSTEM "Xdmf.dtd" []>'
@@ -316,9 +316,9 @@ do i=0,num_periods*timesteps
 		write (100,'(A,I3,A)') '        output_deltaf',i,'.h5:/DELTAF'
 	endif
 	write (100,'(A)') '       </DataItem>'
-	write (100,'(A)') '     </Attribute>'	
+	write (100,'(A)') '     </Attribute>'
 	write (100,'(A)') '   </Grid>'
-	
+
 enddo
 
 
@@ -335,7 +335,7 @@ function bessel(n,x)
 implicit none
 integer :: n
 	double precision :: bessel,x,bessj
-	
+
 	if (n.LT.0) then
 		bessel = (-1.d0**(1.d0*n))*bessj(-n,x)
 	else
@@ -351,7 +351,7 @@ end function
 !     This subroutine calculates the first kind modified Bessel function
 !     of integer order N, for any REAL X. We use here the classical
 !     recursion formula, when X > N. For X < N, the Miller's algorithm
-!     is used to avoid overflows. 
+!     is used to avoid overflows.
 !     REFERENCE:
 !     C.W.CLENSHAW, CHEBYSHEV SERIES FOR MATHEMATICAL FUNCTIONS,
 !     MATHEMATICAL TABLES, VOL.5, 1962.
@@ -468,7 +468,7 @@ end function
       .2457520174D-5,-.240337019D-6 /,P6 /.636619772D0 /
       DATA Q1,Q2,Q3,Q4,Q5 /.04687499995D0,-.2002690873D-3,   &
       .8449199096D-5,-.88228987D-6,.105787412D-6 /
-      DATA R1,R2,R3,R4,R5,R6 /72362614232.D0,-7895059235.D0, & 
+      DATA R1,R2,R3,R4,R5,R6 /72362614232.D0,-7895059235.D0, &
       242396853.1D0,-2972611.439D0,15704.48260D0,-30.16036606D0 /
       DATA S1,S2,S3,S4,S5,S6 /144725228442.D0,2300535178.D0, &
       18583304.74D0,99447.43394D0,376.9991397D0,1.D0 /
@@ -489,4 +489,3 @@ end function
       ENDIF
       RETURN
       END
-

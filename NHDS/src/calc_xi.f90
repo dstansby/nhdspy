@@ -40,7 +40,7 @@ if (ampl_mode.EQ.1) then
 	! Avec fulfills the equation  c * dE = Avec * vA * dB_x
 	Avec(1)=uniti*x/(kz*pol)
 	Avec(2)=-x/kz
-	Avec(3)=polz*uniti*x/(kz*pol)	
+	Avec(3)=polz*uniti*x/(kz*pol)
 else if (ampl_mode.EQ.2) then
 	! Avec fulfills the equation  c * dE = Avec * vA * dB_y
 	Avec(1)=x/(kz-polz*kperp)
@@ -92,7 +92,7 @@ if (ampl_mode.EQ.1) then
 	! Avec fulfills the equation  c * dE = Avec * vA * dB_x
 	Avec(1)=uniti*x/(kz*pol)
 	Avec(2)=-x/kz
-	Avec(3)=polz*uniti*x/(kz*pol)	
+	Avec(3)=polz*uniti*x/(kz*pol)
 else if (ampl_mode.EQ.2) then
 	! Avec fulfills the equation  c * dE = Avec * vA * dB_y
 	Avec(1)=x/(kz-polz*kperp)
@@ -155,10 +155,10 @@ dppar=0.d0
 
 ! Run over all n:
 do n=-nmaxrun,nmaxrun
-   
+
 	if (n.GE.0) then
 		BInz=1.d0*besselI(n,z)
-		dBInzdz=besselI(n+1,z)+1.d0*n*BInz/z 
+		dBInzdz=besselI(n+1,z)+1.d0*n*BInz/z
 	else
 		BInz=1.d0*besselI(-n,z)
 		dBInzdz=besselI(-n-1,z)+1.d0*n*BInz/z
@@ -169,7 +169,7 @@ do n=-nmaxrun,nmaxrun
 	if (n.EQ.1) d2BInzdz2=0.25d0*(3.d0*besselI(1,z)+besselI(3,z))
 	if (n.EQ.-1) d2BInzdz2=0.25d0*(besselI(3,z)+3.d0*besselI(1,z))
 	if (n.EQ.0) d2BInzdz2=0.5d0*(besselI(2,z)+besselI(0,z))
-	
+
 	zeta=(x-kz*vdrift(j)-1.d0*n*Omega(j))/(kz*vtherm(j))
 
 	! determine Stix' (normalized) dispersion functions:
@@ -184,18 +184,18 @@ do n=-nmaxrun,nmaxrun
 
 
 	! This is for the calculation of dpperp:
-	
+
 	Exterm=Avec(1)*(BInz+z*(dBinzdz-BInz))*(1.d0*n)*Omega(j)/kperp
 	Eyterm=-uniti*Avec(2)*(BInz-dBInzdz-0.5d0*z*(BInz+d2BInzdz2)+z*dBInzdz)
 	Eyterm=Eyterm*kperp*vtherm(j)*vtherm(j)*alpha(j)/Omega(j)
 	Ezterm=(1.d0-1.d0*n*Omega(j)/x)*alpha(j)*(Z1-vdrift(j)*Z0)+1.d0*n*Omega(j)*Z1/x
 	Ezterm=Ezterm*Avec(3)*(BInz+z*(dBInzdz-BInz))
-	
+
 	dpperp=dpperp+(Exterm+Eyterm)*(Z0-kz*Z1/x+alpha(j)*kz*(Z1-vdrift(j)*Z0)/x)+Ezterm
 
-	
+
 	! This is for the calculation of dppar:
-	
+
 	Exterm=alpha(j)*kz*(Z3-vdrift(j)*Z2-2.d0*Ubar*Z2+2.d0*vdrift(j)*Ubar*Z1+Ubar*Ubar*Z1-vdrift(j)*Ubar*Ubar*Z0)/x
 	Exterm=Exterm+Z2-2.d0*Ubar*Z1+Ubar*Ubar*Z0
 	Exterm=Exterm-kz*(Z3-2.d0*Ubar*Z2+Ubar*Ubar*Z1)/x
@@ -223,4 +223,3 @@ deltaRj = (vtherm(j)*vtherm(j)*alpha(j)+ampl*dpperp/(density(j)*mass(j)))
 deltaRj = deltaRj /(vtherm(j)*vtherm(j)+ampl*dppar/(density(j)*mass(j)))
 
 end subroutine
-

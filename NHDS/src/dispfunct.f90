@@ -54,7 +54,7 @@ end function
 
 
 !Based on
-!G.P.M. Poppe, C.M.J. Wijers, "More Efficient Computation of the Complex Error-Function", 
+!G.P.M. Poppe, C.M.J. Wijers, "More Efficient Computation of the Complex Error-Function",
 !ACM Trans. Math. Software 16, 47 (1990).
 
 
@@ -265,5 +265,3 @@ PARAMETER (FACTOR=1.12837916709551257388D0,RMAXREAL = 0.5D+154,RMAXEXP  = 708.50
       RETURN
 
       END
-
-

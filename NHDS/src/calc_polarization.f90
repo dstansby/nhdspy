@@ -44,6 +44,6 @@ pol=pol/uniti
 
 polz=(D(1,1)*D(2,2)-D(1,2)*D(2,1))/(D(1,2)*D(2,3)-D(1,3)*D(2,2))
 
-! polz is the quantity Ekz/Ekx  
+! polz is the quantity Ekz/Ekx
 
 end subroutine

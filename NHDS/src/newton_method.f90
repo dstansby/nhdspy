@@ -47,8 +47,8 @@ do while((iter.LT.numiter).AND.(go_for_newton))
         jump=0.d0
         go_for_newton=.FALSE.
    else
-      jump=detx*(x-prevx)/(detx-detprevx) 
-   endif     
+      jump=detx*(x-prevx)/(detx-detprevx)
+   endif
    prevx=x
    x=x-jump
    detprevx=detx

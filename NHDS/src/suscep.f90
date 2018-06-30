@@ -119,7 +119,7 @@ Bn=Bn+((x-1.d0*n*Omega(j))*(alpha(j)*resfac+1.d0*n*Omega(j))/(kz*kz*vtherm(j)*x)
 
 if (n.GE.0) then
 	BInz=1.d0*besselI(n,z)
-	dBInzdz=besselI(n+1,z)+1.d0*n*BInz/z 
+	dBInzdz=besselI(n+1,z)+1.d0*n*BInz/z
 else
 	BInz=1.d0*besselI(-n,z)
 	dBInzdz=besselI(-n-1,z)+1.d0*n*BInz/z
@@ -181,7 +181,7 @@ end function
 !     This subroutine calculates the first kind modified Bessel function
 !     of integer order N, for any REAL X. We use here the classical
 !     recursion formula, when X > N. For X < N, the Miller's algorithm
-!     is used to avoid overflows. 
+!     is used to avoid overflows.
 !     REFERENCE:
 !     C.W.CLENSHAW, CHEBYSHEV SERIES FOR MATHEMATICAL FUNCTIONS,
 !     MATHEMATICAL TABLES, VOL.5, 1962.
@@ -263,6 +263,3 @@ end function
       RETURN
       END
 ! ----------------------------------------------------------------------
-
-
-
