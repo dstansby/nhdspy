@@ -5,7 +5,7 @@ import sys
 if sys.version_info < (3, 5):
     sys.exit('Python versions older than 3.5 are not supported.')
 
-setup(name='NHDSPy',
+setup(name='nhdspy',
       version='0.0.1',
       description='Python wrapper for NHDS',
       author='David Stansby',
