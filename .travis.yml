@@ -8,8 +8,7 @@ before_install:
 - sudo apt-get update -qq
 - sudo apt-get install gfortran libhdf5-dev hdf5-helpers hdf5-tools libhdf5-7
 - export HDF5='/usr/local/Cellar/hdf5/1.10.2_1'
-- dpkg -L libhdf5
-- dpkg -L hdf5
+- dpkg -L libhdf5-7
 # Install conda
 - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
 - chmod +x miniconda.sh
