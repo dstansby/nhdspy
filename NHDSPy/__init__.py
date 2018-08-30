@@ -56,6 +56,10 @@ class InputParams:
         with respect to the magnetic field.
     va : float
         Ratio of the Alfvén speed to the speed of light.
+    kzmin : float
+        Lower limit of wavevector range.
+    kzmax : float
+        Upper limit of wavevector range
 
     Other parameters
     ----------------
@@ -73,6 +77,7 @@ class InputParams:
         Steps in the x,y,z directions.
     """
     def __init__(self, species, omega_guess, propagation_angle, va,
+                 kzmin, kzmax,
                  numiter=1000, det_D_threshold=1e-16,
                  n_bessel=1000, bessel_zero=1e-50,
                  vxsteps=100, vysteps=100, vzsteps=100
@@ -81,6 +86,8 @@ class InputParams:
         self.omega_guess = omega_guess
         self.propagation_angle = propagation_angle
         self.va = va
+        self.kzmin = kzmin
+        self.kzmax = kzmax
         self.numiter = numiter
         self.det_D_threshold = det_D_threshold
         self.n_bessel = n_bessel
@@ -180,7 +187,7 @@ Bessel_zero={bessel_zero}
 initial_guess=({omega_guess_real},{omega_guess_imag})
 
 ! Range of values to scan over in kz:
-kzrange=0.01d0,0.21d0
+kzrange={kzmin},{kzmax}
 
 ! Number of steps to scan over kzrange:
 kzsteps=200
@@ -273,7 +280,9 @@ const_r=T
                charge=create_species_list('q'),
                mass=create_species_list('m'),
                density=create_species_list('n'),
-               vdrift=create_species_list('v_d')
+               vdrift=create_species_list('v_d'),
+               kzmin=helpers._float_to_fortran_str(input.kzmin),
+               kzmax=helpers._float_to_fortran_str(input.kzmax)
                )
     return input_file_sting
 
@@ -296,7 +305,7 @@ def run(input):
     binary = nhds_folder / 'NHDS'
     if not binary.exists():
         subprocess.run(['make', 'clean'], cwd=nhds_folder)
-        subprocess.run(['make'], cwd=nhds_folder)
+        subprocess.run(['make'], cwd=nhds_folder, capture_output=True)
         os.rename((nhds_folder / 'bin' / 'NHDS'), binary)
     out = subprocess.check_output('./NHDS', universal_newlines=True, cwd=nhds_folder)
     return Result(input, out)
