@@ -29,12 +29,8 @@
 SRCS := $(shell ls src/*.f90)
 OBJS := $(SRCS:src/%.f90=obj/%.o)
 
-HDF5 := /usr/local/Cellar/hdf5/1.10.2_1
-LIBZ := /usr/local/Cellar/zlib/1.2.11
-LIBSZ := /usr/local/Cellar/szip/2.1.1_1
-
 INCLUDEHDF := -I$(HDF5)/include
-LIBSHDF := $(HDF5)/lib/libhdf5_fortran.a $(HDF5)/lib/libhdf5.a
+LIBSHDF := $(LIBSHDF5)/libhdf5_fortran.a $(LIBSHDF5)/libhdf5.a
 LIBSLIBZ := $(LIBZ)/lib/libz.a
 LIBSLIBSZ := $(LIBSZ)/lib/libsz.a
 
