@@ -8,6 +8,7 @@ solver written in Fortran.
    :maxdepth: 2
    :caption: Contents:
 
+   installing
    example
    ref
 
