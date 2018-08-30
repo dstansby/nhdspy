@@ -56,9 +56,16 @@ class InputParams:
         with respect to the magnetic field.
     va : float
         Ratio of the Alfvén speed to the speed of light.
+    kzmin : float
+        Start of kz range.
+    kzmax : float
+        End of kz range.
 
     Other parameters
     ----------------
+    kzsteps : int, optional
+        Number of steps in kz to calculate dispersion relation at. Points are
+        linearly spaced between *kzmin* and *kzmax*.
     numiter : int, optional
         Maximum number of iterations in the Newton method
     det_D_threshold : float, optional
@@ -73,6 +80,7 @@ class InputParams:
         Steps in the x,y,z directions.
     """
     def __init__(self, species, omega_guess, propagation_angle, va,
+                 kzmin, kzmax, kzsteps=200,
                  numiter=1000, det_D_threshold=1e-16,
                  n_bessel=1000, bessel_zero=1e-50,
                  vxsteps=100, vysteps=100, vzsteps=100
@@ -81,6 +89,9 @@ class InputParams:
         self.omega_guess = omega_guess
         self.propagation_angle = propagation_angle
         self.va = va
+        self.kzmin = kzmin
+        self.kzmax = kzmax
+        self.kzsteps = kzsteps
         self.numiter = numiter
         self.det_D_threshold = det_D_threshold
         self.n_bessel = n_bessel
@@ -180,10 +191,10 @@ Bessel_zero={bessel_zero}
 initial_guess=({omega_guess_real},{omega_guess_imag})
 
 ! Range of values to scan over in kz:
-kzrange=0.01d0,0.21d0
+kzrange={kzmin},{kzmax}
 
 ! Number of steps to scan over kzrange:
-kzsteps=200
+kzsteps={kzsteps}
 
 ! Temperature anisotropy (Tperp/Tparallel)
 alpha={alpha}
@@ -273,10 +284,12 @@ const_r=T
                charge=create_species_list('q'),
                mass=create_species_list('m'),
                density=create_species_list('n'),
-               vdrift=create_species_list('v_d')
+               vdrift=create_species_list('v_d'),
+               kzmin=helpers._float_to_fortran_str(input.kzmin),
+               kzmax=helpers._float_to_fortran_str(input.kzmax),
+               kzsteps=input.kzsteps
                )
     return input_file_sting
-
 
 
 def run(input):
