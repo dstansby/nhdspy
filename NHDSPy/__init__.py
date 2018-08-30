@@ -280,7 +280,11 @@ const_r=T
 
 def compile_nhds(nhds_folder):
     subprocess.run(['make', 'clean'], cwd=nhds_folder)
-    subprocess.run(['make'], cwd=nhds_folder)
+    result = subprocess.run(['make'], cwd=nhds_folder)
+    if result.returncode != 0:
+        print('')
+        raise RuntimeError(
+            'Compiling NHDS failed, see above for error messages')
     os.rename((nhds_folder / 'bin' / 'NHDS'), nhds_folder / 'NHDS')
 
 
