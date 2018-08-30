@@ -278,6 +278,12 @@ const_r=T
     return input_file_sting
 
 
+def compile_nhds(nhds_folder):
+    subprocess.run(['make', 'clean'], cwd=nhds_folder)
+    subprocess.run(['make'], cwd=nhds_folder)
+    os.rename((nhds_folder / 'bin' / 'NHDS'), nhds_folder / 'NHDS')
+
+
 def run(input):
     '''
     Run the dispersion solver for a given input.
@@ -295,8 +301,7 @@ def run(input):
     # Check if NHDS is compiled
     binary = nhds_folder / 'NHDS'
     if not binary.exists():
-        subprocess.run(['make', 'clean'], cwd=nhds_folder)
-        subprocess.run(['make'], cwd=nhds_folder)
-        os.rename((nhds_folder / 'bin' / 'NHDS'), binary)
-    out = subprocess.check_output('./NHDS', universal_newlines=True, cwd=nhds_folder)
+        compile_nhds(nhds_folder)
+    out = subprocess.check_output(
+        './NHDS', universal_newlines=True, cwd=nhds_folder)
     return Result(input, out)
