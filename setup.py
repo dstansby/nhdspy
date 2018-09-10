@@ -18,4 +18,4 @@ setup(name='nhdspy',
                    'Topic :: Scientific/Engineering :: Physics'],
       install_requires=['numpy'],
       python_requires='>=3.5',
-      packages=['NHDSPy'])
+      packages=['nhdspy'])
