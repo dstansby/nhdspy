@@ -18,17 +18,18 @@ class Species:
         Particle charge, in units of proton charge. e.g. for a proton
         enter ``1``, for an electron enter ``-1``.
     m : float
-        Particle mass, in units of proton mass.
+        Particle mass, in units of proton mass. e.g. for a proton
+        enter ``1``.
     n : float
         Number density, relative to the number density used to define the
         Alfvén speed.
     v_d : float
-        Drift speed
+        Drift speed as a fraction of the Alfvén speed.
     t_ani : float
         Temperature anisotropy (perpendicular temperature divided by
-        parallel temperature)
+        parallel temperature).
     beta_par : float
-        Parallel beta.
+        Parallel beta (thermal pressure divided by magnetic pressure).
     """
     def __init__(self, q, m, n, v_d, t_ani, beta_par):
         assert m > 0, 'Mass must be greater than zero'
@@ -48,6 +49,9 @@ class InputParams:
     ----------
     species : list of :class:`Species`
         List of the particle species for which to calculate the dispersion.
+        **Note** that the order of the species matters, as some of the
+        parameters below are defined relative to the first species in the
+        *species* list.
     omega_guess : complex
         Initial guess for the frequency, normalised to the gyro frequency of
         the first species.
@@ -55,7 +59,8 @@ class InputParams:
         Propagation angle to calculate dispersion relation for. Defined
         with respect to the magnetic field.
     va : float
-        Ratio of the Alfvén speed to the speed of light.
+        Ratio of the Alfvén speed to the speed of light. The number density
+        in the Alfvén speed is taken from the first species.
     kzmin : float
         Start of kz range.
     kzmax : float
@@ -300,7 +305,7 @@ def run(input):
     ----------
     input : InputParams
     '''
-    nhds_folder = path.Path('NHDS')
+    nhds_folder = path.Path('/Users/dstansby/github/nhdspy/NHDS')
     (nhds_folder / 'obj').mkdir(exist_ok=True)
     (nhds_folder / 'bin').mkdir(exist_ok=True)
     # Create input file

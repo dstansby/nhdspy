@@ -1,19 +1,19 @@
 Installing
 ==========
 
-To install NHDSPy, download the code from https://github.com/dstansby/NHDSPy
+To install nhdspy, download the code from https://github.com/dstansby/nhdspy
 Then change into the source directory and run::
 
-  pip install NHDSPy
+  pip install nhdspy
 
-To run NHDSPy you will need the following requirements:
+To run nhdspy you will need the following requirements:
 
   - gfortran
   - hdf5
   - libz
   - szip
 
-Running NHDSPy will automatically try to compile the bundled FORTRAN code.
+Running nhdspy will automatically try to compile the bundled FORTRAN code.
 The following environment variables must point to their respective libaries:
 
   - HDF5

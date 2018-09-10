@@ -1,2 +1,2 @@
-.. automodapi:: NHDSPy
+.. automodapi:: nhdspy
    :no-inheritance-diagram:

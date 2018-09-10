@@ -1,7 +1,7 @@
-NHDSPy
+nhdspy
 ======
 
-NHDSPy is a Python wrapper for NHDS, a numerical plasma dispersion relation
+nhdspy is a Python wrapper for NHDS, a numerical plasma dispersion relation
 solver written in Fortran.
 
 .. toctree::

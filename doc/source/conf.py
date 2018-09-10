@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'NHDSPy'
+project = 'nhdspy'
 copyright = '2018, David Stansby'
 author = 'David Stansby'
 
