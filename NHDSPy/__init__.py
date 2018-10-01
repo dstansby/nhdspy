@@ -112,6 +112,28 @@ class InputParams:
         '''
         return len(self.species)
 
+    @property
+    def total_charge(self):
+        """
+        Total charge density. Result is normalised to the first species' charge
+        and number density.
+        """
+        q = 0
+        for species in self.species:
+            q += species.q * species.n
+        return q
+
+    @property
+    def total_current(self):
+        """
+        Total current density.Result is normalised to the first species'
+        charge, number density, and the Alfvén speed.
+        """
+        j = 0
+        for species in self.species:
+            j += species.q * species.n * species.v_d
+        return j
+
 
 class Result:
     '''
@@ -136,14 +158,16 @@ class Result:
     @property
     def omega_real(self):
         '''
-        Real part of frequency normalised to the proton gyro-frequency.
+        Real part of frequency normalised to the gyro-frequency of the first
+        species.
         '''
         return self.output[:, 1]
 
     @property
     def omega_imag(self):
         '''
-        Imaginary part of frequency normalised to the proton gyro-frequency.
+        Imaginary part of frequency normalised to the gyro-frequency of the
+        first species.
         '''
         return self.output[:, 2]
 
