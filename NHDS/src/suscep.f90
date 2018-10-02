@@ -42,8 +42,7 @@ do i=1,3
  enddo
 enddo
 
-
-!determine maximum n for Besselfunction:
+! Determine maximum n for Besselfunction:
 nmaxrun=nmax
 n=0
 Bessel_run=.TRUE.
@@ -54,7 +53,6 @@ do while (Bessel_run)
   endif
   n=n+1
 enddo
-
 
 if ((n.GE.nmax).AND.(output_warning)) then
  write (*,*) "WARNING: Insufficient order of Bessel function (nmax)."
@@ -70,8 +68,6 @@ do n=-nmaxrun,nmaxrun
    enddo
 enddo
 
-
-
 chi(1,1)=Y(1,1)/(x*ell(j)*ell(j))
 chi(1,2)=Y(1,2)/(x*ell(j)*ell(j))
 chi(1,3)=Y(1,3)/(x*ell(j)*ell(j))
@@ -82,14 +78,7 @@ chi(3,1)=Y(3,1)/(x*ell(j)*ell(j))
 chi(3,2)=Y(3,2)/(x*ell(j)*ell(j))
 chi(3,3)=2.d0*vdrift(j)/(ell(j)*ell(j)*x*kz*vtherm(j)*vtherm(j)*alpha(j))+Y(3,3)/(x*ell(j)*ell(j))
 
-
-
 end subroutine
-
-
-
-
-
 
 
 subroutine calc_ypsilon(Y,j,n,kz,kperp,x)
@@ -104,8 +93,6 @@ logical :: kpos
 
 kpos=.TRUE.
 if (kz.LT.0.d0) kpos=.FALSE.
-
-
 
 zeta=(x-kz*vdrift(j)-1.d0*n*Omega(j))/(kz*vtherm(j))
 resfac=x-kz*vdrift(j)-1.d0*n*Omega(j)
@@ -125,7 +112,6 @@ else
 	dBInzdz=besselI(-n-1,z)+1.d0*n*BInz/z
 endif
 
-
 ! The tensor in Stix's (10-57)
 Y(1,1)=1.d0*(n*n)*BInz*An/z
 Y(1,2)=-uniti*n*(BInz-dBInzdz)*An
@@ -137,11 +123,7 @@ Y(3,1)=kperp*BInz*n*Bn/(Omega(j)*z)
 Y(3,2)=-uniti*kperp*(BInz-dBInzdz)*Bn/Omega(j)
 Y(3,3)=2.d0*(x-1.d0*n*Omega(j))*BInz*Bn/(kz*vtherm(j)*vtherm(j)*alpha(j))
 
-
 end subroutine
-
-
-
 
 
 function besselI(n,x)

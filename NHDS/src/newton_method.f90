@@ -63,14 +63,6 @@ quality=1.*dblabs(detx)
 end subroutine
 
 
-
-
-
-
-
-
-
-
 double complex function determinant(x,kz,kperp)
 use input_params
 implicit none
@@ -82,7 +74,6 @@ call disptensor(D,x,kz,kperp)
 determinant=D(1,1)*D(2,2)*D(3,3)
 determinant=determinant+D(1,2)*D(2,3)*D(3,1)+D(1,3)*D(2,1)*D(3,2)
 determinant=determinant-D(3,1)*D(2,2)*D(1,3)-D(3,2)*D(2,3)*D(1,1)-D(3,3)*D(2,1)*D(1,2)
-
 
 end function
 

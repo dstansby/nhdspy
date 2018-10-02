@@ -52,6 +52,8 @@ real :: quality
 
 call set_parameters()
 
+! Calculate gyrofrequency, plasma frequency, and parallel thermal speed
+! for each species
 do j=1,numspec
   Omega(j)=charge(j)/mass(j)
   ell(j)=sqrt(mass(j)/(density(j)*charge(j)*charge(j)))
@@ -66,6 +68,7 @@ open(unit=10,file='output.dat',status='replace',action='write')
 
 do i=1,kzsteps
 
+   ! Calculate the current k vector
    kz=kzrange(1)+(kzrange(2)-kzrange(1))*(1.d0*i-1.d0)/(1.d0*kzsteps-1.d0)
    kperp=kz*tan(theta*M_PI/180.d0)
 
