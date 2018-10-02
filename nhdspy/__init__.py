@@ -151,23 +151,23 @@ class Result:
     @property
     def kz(self):
         '''
-        Wave vector.
+        Wave vector normalised to the proton intertial length (:math:`kd_{p}`).
         '''
         return self.output[:, 0]
 
     @property
     def omega_real(self):
         '''
-        Real part of frequency normalised to the gyro-frequency of the first
-        species.
+        Real part of frequency normalised to the proton gyro-frequency
+        (:math:`\omega / \Omega_{p}`).
         '''
         return self.output[:, 1]
 
     @property
     def omega_imag(self):
         '''
-        Imaginary part of frequency normalised to the gyro-frequency of the
-        first species.
+        Imaginary part of frequency normalised to the proton gyro-frequency
+        (:math:`\gamma / \Omega_{p}`).
         '''
         return self.output[:, 2]
 
