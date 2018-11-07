@@ -15,3 +15,7 @@ NHDS/parameters.in
 NHDS/NHDS
 
 .pytest_cache
+
+*.mod
+*.so
+*.o
