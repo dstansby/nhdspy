@@ -167,7 +167,7 @@ class Result:
         Real part of frequency normalised to the proton gyro-frequency
         (:math:`\omega / \Omega_{p}`).
         '''
-        return self.output[:, 1]
+        return self.output[:, 2]
 
     @property
     def omega_imag(self):
@@ -175,7 +175,7 @@ class Result:
         Imaginary part of frequency normalised to the proton gyro-frequency
         (:math:`\gamma / \Omega_{p}`).
         '''
-        return self.output[:, 2]
+        return self.output[:, 3]
 
 
 def format_input_file(input):
