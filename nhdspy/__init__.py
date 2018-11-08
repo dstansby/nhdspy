@@ -177,6 +177,22 @@ class Result:
         '''
         return self.output[:, 3]
 
+    @property
+    def EyEx(self):
+        '''
+        The electric field component ratio :math:`E_{y} / E_{x}`.
+        Returned as complex numbers.
+        '''
+        return self.output[:, 4] + self.output[:, 5] * 1j
+
+    @property
+    def EzEx(self):
+        '''
+        The electric field component ratio :math:`E_{z} / E_{x}`.
+        Returned as complex numbers.
+        '''
+        return self.output[:, 6] + self.output[:, 7] * 1j
+
 
 def format_input_file(input):
     '''
