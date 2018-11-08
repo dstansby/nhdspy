@@ -147,12 +147,7 @@ class Result:
     '''
     def __init__(self, input, run_output):
         self.input = input
-        self.output = self._process_output(run_output)
-
-    def _process_output(self, run_output):
-        split = run_output.split('\n')[:-1]
-        split = [[float(a) for a in s.split()] for s in split]
-        return np.array(split)
+        self.output = run_output
 
     @property
     def kz(self):
@@ -377,6 +372,9 @@ def run(input):
     binary = nhds_folder / 'NHDS'
     if not binary.exists():
         helpers.compile_nhds(nhds_folder)
-    out = subprocess.check_output(
+    subprocess.check_output(
         ['./NHDS', 'parameters.in'], universal_newlines=True, cwd=nhds_folder)
+
+    output_file = nhds_folder / 'output_parameters.in.dat'
+    out = np.loadtxt(output_file, skiprows=1)
     return Result(input, out)
