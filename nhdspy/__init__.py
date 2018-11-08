@@ -216,14 +216,14 @@ nmax={nmax}
 ! If I_n is less than this value, higher n are neglected:
 Bessel_zero={bessel_zero}
 
-! Initial frequency guess
+! Initial guess for the frequency (complex number):
 initial_guess=({omega_guess_real},{omega_guess_imag})
 
 ! Range of values to scan over in kz:
 kzrange={kzmin},{kzmax}
 
 ! Number of steps to scan over kzrange:
-kzsteps={kzsteps}
+ksteps={kzsteps}
 
 ! Temperature anisotropy (Tperp/Tparallel)
 alpha={alpha}
@@ -243,8 +243,11 @@ density={density}
 ! Drift speed of the species in units of proton Alfven speed
 vdrift={vdrift}
 
-! Angle of propagation (in degrees)
-theta={propagation_angle}
+! Range of angle of propagation (in degrees)
+theta_range={propagation_angle}, {propagation_angle}]
+
+! Steps in the theta direction
+theta_steps=1
 
 ! Alfven speed divided by speed of light
 vAc={va}
@@ -295,6 +298,18 @@ damping=F
 !		with k * r from 0 ... 2 pi at a fixed time. We "fly" along the k-direction over one wave train.
 ! 		If set on .FALSE., periods does not make a difference
 const_r=T
+
+! Write moments to a file or not:
+output_mom=F
+
+! Write E & B vectors to a file or not:
+output_EB=F
+
+! Override the k,theta values specified above with the ones read from a file:
+kth_file=F
+
+! Filename to read k, theta values from:
+! kth_filename='kth_kawtc'
 /
     '''.format(numspec=input.nspecies,
                numiter=input.numiter,
@@ -332,8 +347,9 @@ def run(input):
     nhds_folder = path.Path('/Users/dstansby/github/nhdspy/NHDS')
     (nhds_folder / 'obj').mkdir(exist_ok=True)
     (nhds_folder / 'bin').mkdir(exist_ok=True)
+    parameter_file = nhds_folder / 'parameters.in'
     # Create input file
-    with open(nhds_folder / 'parameters.in', mode='w') as f:
+    with open(parameter_file, mode='w') as f:
         f.write(format_input_file(input))
     # Check if NHDS is compiled
     binary = nhds_folder / 'NHDS'
