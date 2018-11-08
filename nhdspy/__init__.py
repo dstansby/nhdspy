@@ -226,7 +226,7 @@ Bessel_zero={bessel_zero}
 initial_guess=({omega_guess_real},{omega_guess_imag})
 
 ! Range of values to scan over in kz:
-kzrange={kzmin},{kzmax}
+krange={kzmin},{kzmax}
 
 ! Number of steps to scan over kzrange:
 ksteps={kzsteps}
@@ -250,7 +250,7 @@ density={density}
 vdrift={vdrift}
 
 ! Range of angle of propagation (in degrees)
-theta_range={propagation_angle}, {propagation_angle}]
+theta_range={propagation_angle}, {propagation_angle}
 
 ! Steps in the theta direction
 theta_steps=1
@@ -362,5 +362,5 @@ def run(input):
     if not binary.exists():
         helpers.compile_nhds(nhds_folder)
     out = subprocess.check_output(
-        './NHDS', universal_newlines=True, cwd=nhds_folder)
+        ['./NHDS', 'parameters.in'], universal_newlines=True, cwd=nhds_folder)
     return Result(input, out)
