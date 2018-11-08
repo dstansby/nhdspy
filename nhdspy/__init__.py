@@ -40,6 +40,12 @@ class Species:
         self.t_ani = t_ani
         self.beta_par = beta_par
 
+    def __repr__(self):
+        return ('Species object with ' +
+                'q={self.q}, m={self.m}, n={self.n}, '.format(self=self) +
+                'v_d={self.v_d}, t_ani={self.t_ani}, beta_par={self.beta_par}'.format(self=self)
+                )
+
 
 class InputParams:
     """
