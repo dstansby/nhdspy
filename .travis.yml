@@ -1,6 +1,6 @@
 language: python
 dist: xenial
-env: HDF5="/usr/lib/x86_64-linux-gnu" LIBZ="/usr/lib/x86_64-linux-gnu" LIBSZ="/usr/lib/x86_64-linux-gnu"
+env: HDF5="/usr/lib/x86_64-linux-gnu" LIBZ="/usr/lib/x86_64-linux-gnu" LIBSZ="/usr/lib/x86_64-linux-gnu" INCLUDEHDF="/usr/include"
 
 matrix:
   include:
