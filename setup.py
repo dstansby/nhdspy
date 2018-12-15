@@ -20,4 +20,6 @@ setup(name='nhdspy',
       url='https://github.com/dstansby/nhdspy',
       install_requires=['numpy'],
       python_requires='>=3.5',
-      packages=['nhdspy'])
+      packages=['nhdspy'],
+      package_data={'nhdspy': ['NHDS/*', 'NHDS/src/*']},
+      )
