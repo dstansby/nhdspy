@@ -8,12 +8,11 @@ dist/*
 doc/build/*
 doc/source/api/*
 
-NHDS/obj
-NHDS/bin
-NHDS/input_params.mod
-NHDS/parameters.in
-NHDS/NHDS
-NHDS/output_parameters.in.dat
+nhdspy/NHDS/obj
+nhdspy/NHDS/bin
+nhdspy/NHDS/parameters.in
+nhdspy/NHDS/NHDS
+*output_parameters.in.dat
 
 .pytest_cache
 
