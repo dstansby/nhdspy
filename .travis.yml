@@ -7,9 +7,7 @@ matrix:
 before_install:
 - sudo apt-get update -qq
 - sudo apt-get install -qq gfortran libhdf5-dev zlib1g-dev libsz2
-- export HDF5=/usr/lib/x86_64-linux-gnu
-- export ZLIB=/usr/lib/x86_64-linux-gnu
-- export LIBSZ=/usr/lib/x86_64-linux-gnu
+
 # Install conda
 - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
 - chmod +x miniconda.sh
@@ -22,6 +20,9 @@ before_install:
 - pip install -r requirements/test.txt
 
 script:
+- export HDF5="/usr/lib/x86_64-linux-gnu"
+- export ZLIB="/usr/lib/x86_64-linux-gnu"
+- export LIBSZ="/usr/lib/x86_64-linux-gnu"
 # Check that unit tests work
 - pytest nhdspy/ --cov=nhdspy/ -v
 
