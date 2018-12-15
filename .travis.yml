@@ -1,5 +1,9 @@
 language: python
 dist: xenial
+env:
+  - HDF5="/usr/lib/x86_64-linux-gnu"
+  - LIBZ="/usr/lib/x86_64-linux-gnu"
+  - LIBSZ="/usr/lib/x86_64-linux-gnu"
 
 matrix:
   include:
@@ -21,9 +25,6 @@ before_install:
 - pip install -r requirements/test.txt
 
 script:
-- export HDF5="/usr/lib/x86_64-linux-gnu"
-- export ZLIB="/usr/lib/x86_64-linux-gnu"
-- export LIBSZ="/usr/lib/x86_64-linux-gnu"
 # Check that unit tests work
 - pytest nhdspy/ --cov=nhdspy/ -v
 
