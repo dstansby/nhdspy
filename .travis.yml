@@ -20,7 +20,7 @@ before_install:
 
 script:
 # Check that unit tests work
-- pytest NHDSPy/ --cov=NHDSPy/ -v
+- pytest nhdspy/ --cov=nhdspy/ -v
 
 after_success:
 - pip install codecov
