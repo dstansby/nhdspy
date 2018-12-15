@@ -6,7 +6,7 @@ matrix:
 
 before_install:
 - sudo apt-get update -qq
-- sudo apt-get install -qq gfortran libhdf5-dev
+- sudo apt-get install -qq gfortran libhdf5-dev zlib1g-dev
 - export HDF5=/usr/lib/x86_64-linux-gnu
 # Install conda
 - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
