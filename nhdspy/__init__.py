@@ -362,7 +362,7 @@ def run(input):
     input : InputParams
     '''
     abspath = path.Path(os.path.dirname(__file__))
-    nhds_folder = abspath / '..' / 'NHDS'
+    nhds_folder = abspath / 'NHDS'
     (nhds_folder / 'obj').mkdir(exist_ok=True)
     (nhds_folder / 'bin').mkdir(exist_ok=True)
     parameter_file = nhds_folder / 'parameters.in'
