@@ -29,16 +29,16 @@
 SRCS := $(shell ls src/*.f90)
 OBJS := $(SRCS:src/%.f90=obj/%.o)
 
-INCLUDEHDF := -I$(HDF5)/include
-LIBSHDF := $(HDF5)/lib/libhdf5_fortran.a $(HDF5)/lib/libhdf5.a
-LIBSLIBZ := $(LIBZ)/lib/libz.a
-LIBSLIBSZ := $(LIBSZ)/lib/libsz.a
+# INCLUDEHDF := -I$(HDF5)/include
+# LIBSHDF := $(HDF5)/lib/libhdf5_fortran.a $(HDF5)/lib/libhdf5.a
+# LIBSLIBZ := $(LIBZ)/lib/libz.a
+# LIBSLIBSZ := $(LIBSZ)/lib/libsz.a
 
-COMPILER := gfortran -fbounds-check -O2 -ffixed-line-length-none -ffree-line-length-none -Wunused -lm $(INCLUDEHDF)
+COMPILER := gfortran -fbounds-check -O2 -ffixed-line-length-none -ffree-line-length-none -Wunused -lm # $(INCLUDEHDF)
 
 
 bin/NHDS: $(OBJS)
-	$(COMPILER) $(OBJS) -o $@ $(LIB64) $(LIBSHDF) $(LIBSLIBZ) $(LIBSLIBSZ)
+	$(COMPILER) $(OBJS) -o $@ $(LIB64)
 
 
 obj/%.o:src/%.f90

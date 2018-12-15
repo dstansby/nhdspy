@@ -158,7 +158,7 @@ class Result:
 
     @property
     def omega_real(self):
-        '''
+        r'''
         Real part of frequency normalised to the proton gyro-frequency
         (:math:`\omega / \Omega_{p}`).
         '''
@@ -166,7 +166,7 @@ class Result:
 
     @property
     def omega_imag(self):
-        '''
+        r'''
         Imaginary part of frequency normalised to the proton gyro-frequency
         (:math:`\gamma / \Omega_{p}`).
         '''
@@ -361,7 +361,7 @@ def run(input):
     ----------
     input : InputParams
     '''
-    nhds_folder = path.Path('/Users/dstansby/github/nhdspy/NHDS')
+    nhds_folder = path.Path('NHDS')
     (nhds_folder / 'obj').mkdir(exist_ok=True)
     (nhds_folder / 'bin').mkdir(exist_ok=True)
     parameter_file = nhds_folder / 'parameters.in'
