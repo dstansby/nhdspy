@@ -29,7 +29,7 @@
 SRCS := $(shell ls src/*.f90)
 OBJS := $(SRCS:src/%.f90=obj/%.o)
 
-INCLUDEHDF := -I$(HDF5)/include
+# INCLUDEHDF := -I$(HDF5)/include
 LIBSHDF := $(HDF5)/lib/libhdf5_fortran.a $(HDF5)/lib/libhdf5.a
 LIBSLIBZ := $(LIBZ)/lib/libz.a
 LIBSLIBSZ := $(LIBSZ)/lib/libsz.a
