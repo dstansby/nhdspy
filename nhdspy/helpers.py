@@ -20,9 +20,6 @@ def check_env_var(v):
 
 
 def compile_nhds(nhds_folder):
-    for v in ['HDF5', 'LIBZ', 'LIBSZ']:
-        check_env_var(v)
-
     subprocess.run(['make', 'clean'], cwd=nhds_folder)
     result = subprocess.run(['make'], cwd=nhds_folder)
     if result.returncode != 0:
