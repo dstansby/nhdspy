@@ -38,7 +38,7 @@ COMPILER := gfortran -fbounds-check -O2 -ffixed-line-length-none -ffree-line-len
 
 
 bin/NHDS: $(OBJS)
-	$(COMPILER) $(OBJS) -o $@ $(LIB64) $(LIBSHDF) $(LIBSLIBZ) $(LIBSLIBSZ)
+	$(COMPILER) $(OBJS) -o $@ $(LIB64)
 
 
 obj/%.o:src/%.f90
