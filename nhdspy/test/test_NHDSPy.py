@@ -7,4 +7,7 @@ def test_smoke():
     input = nhdspy.InputParams([electrons, protons],
                                0.009 - 0.0001 * 1j,
                                0.001, 1e-4, 0.1, 1)
+    assert input.total_charge == 0
+    assert input.total_current == 0
+
     output = nhdspy.run(input)
