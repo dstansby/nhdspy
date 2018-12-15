@@ -14,11 +14,6 @@ def _float_to_fortran_str(fl):
     return '{}d{}'.format(factor, exponent)
 
 
-def check_env_var(v):
-    if v not in os.environ:
-        raise RuntimeError('Environment variable "{}" not set'.format(v))
-
-
 def compile_nhds(nhds_folder):
     subprocess.run(['make', 'clean'], cwd=nhds_folder)
     result = subprocess.run(['make'], cwd=nhds_folder)
