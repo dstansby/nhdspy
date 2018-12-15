@@ -13,6 +13,7 @@ NHDS/bin
 NHDS/input_params.mod
 NHDS/parameters.in
 NHDS/NHDS
+NHDS/output_parameters.in.dat
 
 .pytest_cache
 
