@@ -18,15 +18,15 @@
 
 
 # -- Project information -----------------------------------------------------
-
+import nhdspy
 project = 'nhdspy'
 copyright = '2018, David Stansby'
 author = 'David Stansby'
 
 # The short X.Y version
-version = ''
+version = nhdspy.__version__
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = nhdspy.__version__
 
 
 # -- General configuration ---------------------------------------------------
