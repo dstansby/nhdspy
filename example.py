@@ -14,6 +14,10 @@ input = nhdspy.InputParams([electrons, protons], omega_0, theta_kB,
 output = nhdspy.run(input)
 
 fig, ax = plt.subplots()
-ax.plot(output.kz, output.omega_real)
-ax.plot(output.kz, output.omega_imag)
+ax.plot(output.kz, output.omega_real, label='Real part')
+ax.plot(output.kz, output.omega_imag, label='Imaginary part')
+ax.set_xlabel('$kd_{p}$')
+ax.set_ylabel(r'$\omega / \Omega_{p}$')
+ax.legend()
+
 plt.show()
