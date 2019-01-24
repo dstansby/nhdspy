@@ -1,18 +1,10 @@
-nhdspy
-======
+.. include:: ../../README.rst
 
-nhdspy is a Python wrapper for NHDS, a numerical plasma dispersion relation
-solver written in Fortran.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+  :maxdepth: 1
 
-   installing
-   example
-   ref
-
-
+  ref
 
 Indices and tables
 ==================
