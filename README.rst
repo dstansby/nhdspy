@@ -28,25 +28,8 @@ To install nhdspy, run
 
   pip install nhdspy
 
-
-Example
+Running
 -------
-
-.. code-block:: python
-
- import nhdspy
- import matplotlib.pyplot as plt
-
- electrons = nhdspy.Species(-1, 1 / 1836, 1, 0, 1, 1)
- protons = nhdspy.Species(1, 1, 1, 0, 1, 1)
- propagation_angle = 0.001
-
- input = nhdspy.InputParams([protons, electrons], propagation_angle, 1e-4)
- print(nhdspy.format_input_file(input))
-
- output = nhdspy.run(input)
-
- fig, ax = plt.subplots()
- ax.plot(output.kz, output.omega_real)
- ax.plot(output.kz, output.omega_imag)
- plt.show()
+NHDS is written in fortran, so requires a working fortran compiler. When nhdspy
+is first run it attempts to compile NHDS; if it is not successfully it
+gracefully exits and prints the fortran compile error.
