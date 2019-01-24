@@ -379,3 +379,7 @@ def run(input):
     output_file = nhds_folder / 'output_parameters.in.dat'
     out = np.loadtxt(output_file, skiprows=1)
     return Result(input, out)
+
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions

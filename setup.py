@@ -1,12 +1,15 @@
 from setuptools import setup
 import os
 import sys
+import versioneer
 
 if sys.version_info < (3, 5):
     sys.exit('Python versions older than 3.5 are not supported.')
 
+
 setup(name='nhdspy',
-      version='0.1',
+      version=versioneer.get_version(),
+      cmdclass=versioneer.get_cmdclass(),
       description='Python wrapper for the New Hampshire Dispersion Solver',
       author='David Stansby',
       license='MIT',
